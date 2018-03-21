@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,7 +24,7 @@ const database = {
   login: [
     {
       id: '987',
-      has: '',
+      hash: '',
       email: 'john@gmail.com'
     }
   ]
@@ -35,6 +36,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
+  bcrypt.compare("apples", '$2a$10$zrkTf3OC8YBAarAoNH0Keegv7vO92wfbpC6/O98B1Q3zY6fFlx9TO', function(err, res) {
+    console.log('first gess', res);
+  });
+  bcrypt.compare("veggies", '$2a$10$zrkTf3OC8YBAarAoNH0Keegv7vO92wfbpC6/O98B1Q3zY6fFlx9TO', function(err, res) {
+    console.log('second gess', res);
+  });
   if (req.body.email === database.users[0].email &&
       req.body.password === database.users[0].password) {
         res.json('success');
@@ -45,6 +52,7 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { email, name, password } = req.body;
+
   database.users.push({
     id: '125',
     name: name,
@@ -85,6 +93,21 @@ app.put('/image', (req, res) => {
   }
 });
 
+
+
+/*
+  bcrypt.hash(password, null, null, function(err, hash) {
+    console.log(hash);
+  });
+   //load hash from password db
+bcrypt.compare("bacon", hash, function(err, res) {
+  // res == true
+});
+
+bcrypt.compare("veggies", hash, function(err, res) {
+  // res == false
+});
+*/
 app.listen(3000, () => {
   console.log('app is running on port 3000');
-});
+}); 
