@@ -91,8 +91,6 @@ app.put('/image', (req, res) => {
   }
 });
 
-
-
 /*
   bcrypt.hash(password, null, null, function(err, hash) {
     console.log(hash);
