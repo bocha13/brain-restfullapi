@@ -35,6 +35,7 @@ const database = {
   ]
 }
 
+
 app.get('/', (req, res) => {
   res.send(database.users);
 });
